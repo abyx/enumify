@@ -10,7 +10,7 @@ class Model < SuperModel::Base
   
 end
 
-describe :Enumify do
+describe Enumify do
 
   before(:each) do
     @obj = Model.new(:status => :available)
@@ -19,11 +19,11 @@ describe :Enumify do
   describe "short hand methods" do
     describe "question mark (?)" do
       it "should return true if value of enum equals a value" do
-        @obj.available?.should be_true
+        @obj.should be_available
       end
 
-      it "should return false if value of enum is different " do
-        @obj.canceled?.should be_false
+      it "should return false if value of enum is different" do
+        @obj.should_not be_canceled
       end
 
     end
@@ -37,8 +37,8 @@ describe :Enumify do
 
     it "should have two shorthand methods for each possible value" do
       Model::STATUSES.each do |val|
-        @obj.respond_to?("#{val}?").should be_true
-        @obj.respond_to?("#{val}!").should be_true
+        @obj.should respond_to("#{val}?")
+        @obj.should respond_to("#{val}!")
       end
     end
   end
@@ -55,12 +55,12 @@ describe :Enumify do
   describe "setting value" do
     it "should except values as symbol" do
       @obj.status = :canceled
-      @obj.canceled?.should be_true
+      @obj.should be_canceled
     end
 
     it "should except values as string" do
       @obj.status = "canceled"
-      @obj.canceled?.should be_true
+      @obj.should be_canceled
     end
   end
 
